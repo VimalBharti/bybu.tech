@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bybu - Best Free Image to Text Converter</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="description" content="Free & Easy to use image to text converter | Extrat all text from your image file to one signe text file, Gif, Jpg, Jpeg and Png format supported | Best Image to Text Converter free">
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  
+
+  <!-- Styling -->
+  <style>
+  	::-webkit-scrollbar {width: 0px;background: transparent;}
+  	.upload-image-area{padding-top: 6vh;padding-left: 5vw;padding-right: 5vw;}
+	.upload-title{font-size: 1.6em;font-weight: bold;color: #54BDD5;margin-bottom: 8px;}
+	.upload-caption{color: #828282;}
+	.upload-btn{
+		padding: 11px 50px 11px 20px !important;
+		font-size: 18px !important;
+		background-color: #54BDD5;
+		font-weight: bold;
+		text-shadow: 1px 1px #54BDD5;
+		color: #ffffff;
+		border-radius: 0 5px 5px 0;
+		-moz-border-radius: 0 5px 5px 0;
+		-webkit-border-radius: 0 5px 5px 0;
+		border: 1px solid #54BDD5;
+		cursor: pointer;
+		box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+		-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+		-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+		transition: all 0.5s ease;
+	}
+	.upload-btn:hover{box-shadow: none;}
+	.upload-button-group{position: relative;text-align: right;}
+	.upload-icon{position: absolute;right: 15px;color: #fff;padding-top: 12px;font-size: 28px;}
+	form{margin-top:2em;}
+	.image-preview-title{margin-top: 2em;}
+	.message-body{font-size: 16px; padding: 10px;}
+	.image-preview{max-width: 250px;max-height: 250px;margin-top: 5px;}
+	.main-logo{width: 100vw;position: fixed;top: 0;left: right;text-align: center;}
+	.main-logo img{max-width: 160px;}
+	.extract-text-container{height: 100vh;overflow-y: scroll;}
+	.extract-text-container h2{font-size: 1em;margin-top: 1.4em;color:#54BDD5;margin-bottom: 10px;}
+	.text-footer{position: absolute;bottom: 0;left: 0;right: 0;padding-left: 1em;font-size: 0.8em;}
+	.text-footer a{text-decoration: none;color: #54BDD5;font-weight: bold;}
+	textarea{width: 100%;height: 100%}
+	#saveAsText{position: absolute;top: 15px;right: 20px;background: #54BDD5;padding: 10px 17px;border-radius: 50%;color: #fff;font-size: 22px;}
+	.no-output{text-align: center;margin-top: 40vh;}
+	.language-support{font-size: 11px;color: #D03B1B;margin-top: 6px;}
+	#text{height: 100vh;}
+  </style>
+  <!-- Styling Ends -->
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123989535-3"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-123989535-3');
+	</script>
+
+</head>
+<body>
+  	
+  	<div class="columns">
+  		<div class="main-logo">
+			<a href="/"><img src="https://www.bybu.cc/b-images/byhelp-blue-logo.png"></a>
+		</div>
+
+  		<div class="column is-6">
+  			<div class="upload-image-area">
+				<div class="upload-title">Upload Image</div>
+				<div class="upload-caption">It analyzes the text in images that you upload, and converts into text that you can easily read, save or share. It allows you to extract text from GIF, JPG, JPEG, PNG format.</div>
+				<div class="language-support">Language Supported (Eng)</div>
+
+				{% if msg %}
+				    <article class="message is-primary image-preview-title">
+					  <div class="message-body">
+					    {{ msg }}
+					  </div>
+					</article>
+				{% endif %}
+
+				<form method=post enctype=multipart/form-data>
+
+					<div class="file is-medium has-name is-fullwidth upload-input">
+					  <label class="file-label">
+					    <input class="file-input" type="file" name="file">
+					    <span class="file-cta">
+					      <span class="file-icon">
+					        <i class="fas fa-upload"></i>
+					      </span>
+					      <span class="file-label">
+					        Upload Image File to convert
+					      </span>
+					    </span>
+					    <div class="upload-button-group">
+							<input type="submit" value="Convert" class="upload-btn">
+							<i class="fas fa-cogs upload-icon"></i>
+						</div>
+					  </label>
+					</div>
+
+					
+				</form>
+
+			    <article class="message is-info image-preview-title">
+				  <div class="message-body">
+				    Image Preview:
+				  </div>
+				</article>
+
+				{% if img_src %}
+					<img src="{{ img_src }}" class="image-preview">
+				{% endif %}	
+			</div>
+
+			<div class="text-footer">
+				<p>&copy; 2019 <a href="https://bybu.cc" target="_blank">Bybu</a> - byHelp</p>
+			</div>	
+  		</div>
+
+  		<div class="column is-6 extract-text-container">
+  			{% if extracted_text %}
+				<h2>The Extracted Text from Image</h2>
+				
+				<a class="button" id="saveAsText" onclick="save()">
+				    <span class="icon is-small">
+				      <i class="fas fa-download"></i>
+				    </span>
+				</a>
+
+				<textarea id="text" class="textarea">{{ extracted_text }}</textarea>
+
+			{% else %}
+				<!-- <h2 class="mt-6">The Extracted text will be dislayed here</h2> -->
+			    <article class="message is-info image-preview-title no-output">
+				  <div class="message-body">
+				    The Extracted text will be dislayed here
+				  </div>
+				</article>
+			{% endif %}
+  		</div>
+
+  	</div>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" integrity="sha256-FPJJt8nA+xL4RU6/gsriA8p8xAeLGatoyTjldvQKGdE=" crossorigin="anonymous"></script>
+  <script>
+  	function save(){
+    	var text = document.getElementById('text').value;
+    	var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+    	saveAs(blob, "Text-Output.txt");
+    }
+  </script>
+</body>
+</html>
