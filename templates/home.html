@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bybu - Best Free Image to Text Converter</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="description" content="Free & Easy to use image to text converter | Extract all text from your image file to one single text file, Gif, Jpg, Jpeg and Png format supported | Best Image to Text Converter free">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" integrity="sha256-vK3UTo/8wHbaUn+dTQD0X6dzidqc5l7gczvH+Bnowwk=" crossorigin="anonymous" />
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ <style>
+ 	nav.navbar{background: transparent !important;}
+ 	.main-container{
+		min-height: 100vh;
+		background: url('https://www.bybu.cc/b-images/byhelp-bg.jpg');
+		background-size: cover !important;
+	}
+	.logo-image{max-width: 180px;}
+	.links-container{margin-top: 42vh;text-align: center;}
+	.links-container h3{margin-bottom: 12px;color: #fff;font-weight: bold;text-transform: uppercase;letter-spacing: 2px;font-size: 14px;color: #eee;}
+	.links-container h1{margin-bottom: 0px;color: #fff;font-weight: bold;text-transform: uppercase;font-size: 1.8em;}
+	.links-container p{margin-bottom: 2em;color: #fff;}
+	.links-container img{/*max-height: 180px;*/} 
+	/*mobile links*/
+	.mobile-link-container h1{margin-bottom: 10px;color: #5E5D96;font-weight: bold;text-transform: uppercase;font-size: 1.3em;font-weight: bold}
+	.mobile-link-container h3{margin-bottom: 3em;;font-weight: bold;text-transform: uppercase;letter-spacing: 2px;font-size: 12px;color: #888;}
+	.mobile-link-container{
+		text-align: center;padding: 2em;margin-top: 15vh;
+	}
+	.top-text{
+		text-align: center;
+		color: #fff;
+		width: 100%;
+		font-size: 1em;
+		text-transform: uppercase;
+		letter-spacing: 6px;
+		margin-top: 1em;
+		display: none;
+	}
+	.footer-text{
+		text-transform: uppercase;
+		color: #efefef;
+		font-weight: bold;
+		text-align: center;
+		font-size: 13px;
+		margin-top: 10px;
+	}
+	.footer-text a{color: #fca4a7 !important;text-decoration: none;}
+	.card{border-radius: 15px;}
+	.convert-btn{background: #fca4a7;color: #fff;border:0px;border-bottom: 5px solid #ea9396;transition: all 0.3s ease;}
+	.convert-btn:hover{background: #ea9396;color: #fff;border-bottom: 5px solid #ea9396}
+
+	/*upload page styling*/
+	::-webkit-scrollbar {width: 0px;background: transparent;}
+  	.upload-image-area{padding-top: 6vh;padding-left: 5vw;padding-right: 5vw;min-height: 100vh;}
+	.upload-title{font-size: 1.6em;font-weight: bold;color: #5E5D96;margin-bottom: 8px;}
+	.upload-caption{color: #828282;}
+	.upload-btn{
+		padding: 11px 50px 11px 20px !important;
+		font-size: 18px !important;
+		background-color: #5E5D96;
+		font-weight: bold;
+		text-shadow: 1px 1px #5E5D96;
+		color: #ffffff;
+		border-radius: 0 5px 5px 0;
+		-moz-border-radius: 0 5px 5px 0;
+		-webkit-border-radius: 0 5px 5px 0;
+		border: 1px solid #5E5D96;
+		cursor: pointer;
+		box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+		-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+		-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+		transition: all 0.5s ease;
+	}
+	.upload-btn:hover{box-shadow: none;}
+	.upload-button-group{position: relative;text-align: right;}
+	.upload-icon{position: absolute;right: 10px;color: #fff;padding-top: 13px;font-size: 32px;}
+	form{margin-top:2em;}
+	.fileInput{width: 100%;height: 46px;background: #fff;border: 1px solid #efefef;}
+	.fileInput::-webkit-file-upload-button {
+	  border: 1px solid grey;height: 45px;background: #5E5D96;color: #fff;
+	  padding-left: 2em;padding-right: 2em;
+	}
+	.image-preview-title{margin-top: 2em;}
+	.message-body{font-size: 16px; padding: 10px;}
+	.image-preview{max-width: 250px;max-height: 250px;margin-top: 5px;}
+	.main-logo{width: 100vw;position: fixed;top: 0;left: right;text-align: center;}
+	.main-logo img{max-width: 160px;}
+	.extract-text-container{height: 100vh;overflow-y: scroll;}
+	.extract-text-container h2{font-size: 1em;margin-top: 1.4em;color:#5E5D96;margin-bottom: 10px;}
+	.text-footer{position: absolute;bottom: 0;left: 0;right: 0;padding-left: 1em;font-size: 0.8em;color: #444}
+	.text-footer a{text-decoration: none;color: #5E5D96;font-weight: bold;}
+	textarea{width: 100%;height: 100%}
+	/*#saveAsText{position: absolute;top: 15px;right: 20px;background: #54BDD5;padding: 10px 17px;border-radius: 50%;color: #fff;font-size: 22px;}*/
+	.no-output{text-align: center;margin-top: 40vh;}
+	.language-support{font-size: 11px;color: #D03B1B;margin-top: 6px;}
+	#text{height: 100vh;}
+ </style>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123989535-3"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-123989535-3');
+	</script>
+</head>
+<body>
+	<div class="main-container">
+
+		<nav class="navbar is-spaced" role="navigation" aria-label="main navigation">
+			<div class="navbar-brand">
+				<a href="/" class="navbar-item">
+					<img src="https://www.bybu.cc/b-images/byhelp-logo.png" max-width="180">
+				</a>
+			</div>	
+
+			<div class="navbar-end is-hidden-touch">
+			    <div class="navbar-item">
+			        <div class="buttons">
+			          <a class="button is-light" href="https://www.buymeacoffee.com/bybu" target="_blank">
+			            <img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/BMC-btn-logo.svg" alt="Buy me a coffee">
+						<span style="margin-left:5px">Buy me a coffee</span>
+			          </a>
+			        </div>
+			    </div>
+		    </div> 
+		</nav>
+		
+		<div class="columns links-container is-hidden-touch">
+			<div class="column is-6 is-offset-3">
+				<h1>Image to Text Converter</h1>
+				<h3>Convert picture to text with image OCR</h3>
+				<p>It is a free online service that converts images into editable text format. Just upload an image file and our amazing tool will convert the image into text and results will appear in real-time. You can extract the text from any scanned document or image in a few seconds.</p>
+				<a class="button is-medium convert-btn" id="navBtn" href="#extract-area">Convert Image To Text</a>
+				<div class="footer-text">
+					A Product by 
+					<a href="https://bybu.cc" target="_blank">Bybu.CC</a>
+				</div>	
+			</div>
+		</div>
+		<!-- mobile-link-container -->
+		<div class="columns mobile-link-container is-hidden-desktop">
+			<div class="column">
+				<h1>Image to Text Converter</h1>
+				<h3>Convert picture to text with image OCR</h3>
+				<a class="button is-medium convert-btn" id="navBtn" href="#extract-area">Convert Image To Text</a>
+				<div class="footer-text">
+					A Product by 
+					<a href="https://bybu.cc" target="_blank">Bybu.CC</a>
+				</div>	
+			</div>
+		</div>
+    </div>
+
+    <!-- converter area -->
+    <div class="columns">
+
+  		<div class="column is-6">
+  			<div class="upload-image-area">
+				<div class="upload-title">Upload Image</div>
+				<div class="upload-caption">It analyzes the text in images that you upload, and converts into text that you can easily read, save or share. It allows you to extract text from GIF, JPG, JPEG, PNG format.</div>
+				<div class="language-support">Language Supported (Eng)</div>
+
+				{% if msg %}
+				    <article class="message is-primary image-preview-title">
+					  <div class="message-body">
+					    {{ msg }}
+					  </div>
+					</article>
+				{% endif %}
+
+				<form method=post enctype=multipart/form-data id="form" onsubmit="return">
+					<div class="file is-medium has-name is-fullwidth upload-input">
+						<input class="fileInput" type="file" name="file">
+						<div class="upload-button-group">
+							<input type="submit" value="Convert" class="upload-btn">
+							<i class="fas fa-cogs upload-icon"></i>
+						</div>
+					</div>
+				</form>
+
+			    <article class="message image-preview-title is-dark">
+				  <div class="message-body">
+				    Image Preview:
+				  </div>
+				</article>
+
+				{% if img_src %}
+					<img src="{{ img_src }}" class="image-preview">
+				{% endif %}	
+			</div>
+  		</div>
+
+  		<div class="column is-6 extract-text-container" id="extract-area">
+  			{% if extracted_text %}
+				<nav class="navbar is-transparent">
+					<div class="navbar-brand">
+						<h2>The Extracted Text from Image</h2>
+					</div>
+					<div class="navbar-end">
+						<div class="navbar-item">
+							<div class="field is-grouped">
+								<p class="control">
+									<a class="button" id="saveAsText" onclick="save()">
+									    <span class="icon is-small">
+									      <i class="fas fa-download"></i>
+									    </span>
+									    <span>Download</span>
+									</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</nav>
+
+				<textarea id="text" class="textarea">{{ extracted_text }}</textarea>
+
+			{% else %}
+				<!-- <h2 class="mt-6">The Extracted text will be dislayed here</h2> -->
+			    <article class="message image-preview-title no-output is-dark">
+				  <div class="message-body">
+				    The Extracted text will be dislayed here
+				  </div>
+				</article>
+			{% endif %}
+  		</div>
+
+  	</div>
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js" integrity="sha256-FPJJt8nA+xL4RU6/gsriA8p8xAeLGatoyTjldvQKGdE=" crossorigin="anonymous"></script>
+	<script>
+		function save(){
+			var text = document.getElementById('text').value;
+			var blob = new Blob([text], {type: "text/plain;charset=utf-8"});
+			saveAs(blob, "Text-Output.txt");
+		}
+		$(document).ready(function(){
+		  // Add smooth scrolling to all links
+		  $("a").on('click', function(event) {
+
+		    // Make sure this.hash has a value before overriding default behavior
+		    if (this.hash !== "") {
+		      // Prevent default anchor click behavior
+		      event.preventDefault();
+
+		      // Store hash
+		      var hash = this.hash;
+
+		      // Using jQuery's animate() method to add smooth page scroll
+		      // The optional number (800) specifies the number of milliseconds it takes to scroll to the specified area
+		      $('html, body').animate({
+		        scrollTop: $(hash).offset().top
+		      }, 800, function(){
+		   
+		        // Add hash (#) to URL when done scrolling (default click behavior)
+		        window.location.hash = hash;
+		      });
+		    } // End if
+		  });
+		});
+	</script>
+
+</body>
+</html>
