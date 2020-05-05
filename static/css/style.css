@@ -1,0 +1,33 @@
+.main-container{
+	min-height: 100vh;
+}
+.logo-image{max-width: 180px;}
+.links-container{
+	margin-top: 38vh;
+}
+.links-container img{
+	max-height: 160px;
+} 
+.top-text{
+	text-align: center;
+	color: #fff;
+	width: 100%;
+	font-size: 1em;
+	text-transform: uppercase;
+	letter-spacing: 6px;
+}
+.footer-text{
+	text-transform: uppercase;
+	color: #efefef;
+	font-weight: bold;
+	position: absolute;
+	bottom: 0;
+	left: 0;right: 0;
+}
+.footer-text a{
+	color: #846FA0 !important;
+	text-decoration: none;
+}
+.cards{
+	border-radius: 15px;
+}
